@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>CLIENT_ID</key>
+	<string>1057911453254-ra1qh3gkb0fhpse578m7s83blldfg0sc.apps.googleusercontent.com</string>
+	<key>REVERSED_CLIENT_ID</key>
+	<string>com.googleusercontent.apps.1057911453254-ra1qh3gkb0fhpse578m7s83blldfg0sc</string>
+	<key>API_KEY</key>
+	<string>AIzaSyDj719iR0aWB2P9nInA1lApG6xBI6Pqats</string>
+	<key>GCM_SENDER_ID</key>
+	<string>1057911453254</string>
+	<key>PLIST_VERSION</key>
+	<string>1</string>
+	<key>BUNDLE_ID</key>
+	<string>io.adapt2.hellapunk</string>
+	<key>PROJECT_ID</key>
+	<string>hellapunk-3704f</string>
+	<key>STORAGE_BUCKET</key>
+	<string>hellapunk-3704f.appspot.com</string>
+	<key>IS_ADS_ENABLED</key>
+	<false></false>
+	<key>IS_ANALYTICS_ENABLED</key>
+	<false></false>
+	<key>IS_APPINVITE_ENABLED</key>
+	<true></true>
+	<key>IS_GCM_ENABLED</key>
+	<true></true>
+	<key>IS_SIGNIN_ENABLED</key>
+	<true></true>
+	<key>GOOGLE_APP_ID</key>
+	<string>1:1057911453254:ios:2c018cc7643492287b3c47</string>
+</dict>
+</plist>
