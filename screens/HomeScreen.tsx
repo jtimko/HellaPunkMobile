@@ -1,5 +1,5 @@
 import { Button, SafeAreaView, ScrollView, Text, View } from "react-native";
-import auth, { FirebaseAuthTypes } from '@react-native-firebase/auth';
+import auth from '@react-native-firebase/auth';
 
 export default function HomeScreen() {
     const user = auth().currentUser;

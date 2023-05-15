@@ -5,6 +5,7 @@ import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import HomeScreen from './screens/HomeScreen';
 import RadioScreen from './screens/RadioScreen';
 import SettingsScreen from './screens/SettingsScreen';
+import LoginScreen from './screens/LoginScreen';
 
 
 const Tab = createBottomTabNavigator();
@@ -23,7 +24,15 @@ export default function App(): JSX.Element {
     return subscriber;
   }, []);
 
-  //if (initializing) return 1;
+  if (initializing) return <></>;
+
+  if (!user) {
+    return (
+      <>
+        <LoginScreen />
+      </>
+    )
+  }
 
   return (
     <NavigationContainer>
