@@ -1,27 +1,48 @@
 import { Button, SafeAreaView, ScrollView, Text, View } from "react-native";
 import auth from '@react-native-firebase/auth';
+import { useEffect, useState } from "react";
+
+interface Post {
+  title: string;
+  id: string;
+  updatedAt: string;
+  user: {
+    name: string;
+    image: string;
+  }
+  _count: {
+    comments: number;
+  }
+}
 
 export default function HomeScreen() {
-    const user = auth().currentUser;
-    return (
-      <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
-        <SafeAreaView>
-          <ScrollView
-            contentInsetAdjustmentBehavior="automatic"
-          >
-            {!user ? <View>
-              <Button
-                title="Need to login!"
-              //onPress={() => loginOptions()}
-              />
-            </View>
-              :
-              <View>
-                <Text>Hi {user.email}</Text>
-              </View>
-            }
-          </ScrollView>
-        </SafeAreaView>
-      </View>
-    );
-  }
+  const [posts, setPosts] = useState<Post[]>([]);
+
+  useEffect(() => {
+    const latestPost = async () => {
+      const data = await fetch("http://localhost:3000/post/latest");
+      const resp = await data.json();
+      setPosts(resp);
+    }
+    latestPost();
+  }, []);
+
+  return (
+    <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
+      <SafeAreaView>
+        <ScrollView contentInsetAdjustmentBehavior="automatic">
+          <View>
+            {posts.map((post: Post) => (
+                <View key={post.id}>
+                  <Text>{post.title}</Text>
+                  <Text>{post.user.name}</Text>
+                  <Text>{post.updatedAt}</Text>
+                  <Text>{post._count.comments}</Text>
+                </View>
+              ))}
+          </View>
+        </ScrollView>
+      </SafeAreaView>
+    </View>
+  );
+}
