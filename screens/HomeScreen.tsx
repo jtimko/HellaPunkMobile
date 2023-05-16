@@ -1,6 +1,6 @@
-import { Button, SafeAreaView, ScrollView, Text, View } from "react-native";
-import auth from '@react-native-firebase/auth';
+import { Alert, SafeAreaView, ScrollView, Text, TouchableOpacity, View } from "react-native";
 import { useEffect, useState } from "react";
+import { createNativeStackNavigator } from "@react-navigation/native-stack";
 
 interface Post {
   title: string;
@@ -15,7 +15,7 @@ interface Post {
   }
 }
 
-export default function HomeScreen() {
+function Test1(props: { navigation: any }) {
   const [posts, setPosts] = useState<Post[]>([]);
 
   useEffect(() => {
@@ -26,23 +26,52 @@ export default function HomeScreen() {
     }
     latestPost();
   }, []);
-
   return (
     <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
       <SafeAreaView>
         <ScrollView contentInsetAdjustmentBehavior="automatic">
           <View>
             {posts.map((post: Post) => (
-                <View key={post.id}>
-                  <Text>{post.title}</Text>
-                  <Text>{post.user.name}</Text>
-                  <Text>{post.updatedAt}</Text>
-                  <Text>{post._count.comments}</Text>
-                </View>
-              ))}
+              <TouchableOpacity
+                key={post.id}
+                style={{ flex: 1, marginTop: 10, backgroundColor: "red" }}
+                onPress={() => props.navigation.navigate("EditPost", { username: post.user.name })}
+              >
+                <Text>{post.title}</Text>
+                <Text>{post.user.name}</Text>
+                <Text>{post.updatedAt}</Text>
+                <Text>{post._count.comments}</Text>
+              </TouchableOpacity>
+            ))}
           </View>
         </ScrollView>
       </SafeAreaView>
     </View>
+  );
+}
+
+function Test2(props: {route: any, navigation: any}) {
+  const post = props.route?.params?.username;
+  return (
+    <SafeAreaView>
+      <ScrollView contentInsetAdjustmentBehavior="automatic">
+        <View>
+          <Text>Hello {post}</Text>
+        </View>
+      </ScrollView>
+    </SafeAreaView>
+  );
+}
+
+const Stack = createNativeStackNavigator();
+export default function HomeScreen(props: { navigation: any }) {
+
+
+  return (
+
+    <Stack.Navigator screenOptions={{ headerShown: false }}>
+      <Stack.Screen name="Home" component={Test1} />
+      <Stack.Screen name="EditPost" component={Test2} />
+    </Stack.Navigator>
   );
 }
