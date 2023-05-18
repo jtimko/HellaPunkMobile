@@ -1,12 +1,11 @@
-import React, { useState, useEffect } from 'react';
-import auth, { FirebaseAuthTypes } from '@react-native-firebase/auth';
-import { NavigationContainer } from '@react-navigation/native';
-import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
+import React, {useState, useEffect} from 'react';
+import auth, {FirebaseAuthTypes} from '@react-native-firebase/auth';
+import {NavigationContainer} from '@react-navigation/native';
+import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 import HomeScreen from './screens/HomeScreen';
 import RadioScreen from './screens/RadioScreen';
 import SettingsScreen from './screens/SettingsScreen';
 import LoginScreen from './screens/LoginScreen';
-
 
 const Tab = createBottomTabNavigator();
 
@@ -31,7 +30,7 @@ export default function App(): JSX.Element {
       <>
         <LoginScreen />
       </>
-    )
+    );
   }
 
   return (
@@ -44,4 +43,3 @@ export default function App(): JSX.Element {
     </NavigationContainer>
   );
 }
-

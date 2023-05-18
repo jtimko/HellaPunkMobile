@@ -1,5 +1,5 @@
-import { useEffect, useState } from "react";
-import { TouchableOpacity, SafeAreaView, ScrollView, Text, View, Dimensions } from "react-native";
+import { useEffect, useState, useCallback } from "react";
+import { TouchableOpacity, SafeAreaView, ScrollView, Text, View, Dimensions, RefreshControl } from "react-native";
 import AddNewPost from "../components/AddNewPost";
 
 interface Post {
@@ -15,10 +15,20 @@ interface Post {
     }
 }
 
+
 const windowWidth = Dimensions.get('window').width;
 const windowHeight = Dimensions.get('window').height;
+
 export default function ForumScreen(props: { navigation: any }) {
     const [posts, setPosts] = useState<Post[]>([]);
+    const [refreshing, setRefreshing] = useState(false);
+
+    const onRefresh = useCallback(() => {
+        setRefreshing(true);
+        setTimeout(() => {
+          setRefreshing(false);
+        }, 2000);
+      }, []);
 
     useEffect(() => {
         const latestPost = async () => {
@@ -31,7 +41,11 @@ export default function ForumScreen(props: { navigation: any }) {
 
     return (
         <SafeAreaView style={{flex: 1, alignItems: 'center', justifyContent: 'center' }}>
-            <ScrollView contentInsetAdjustmentBehavior="automatic">
+            <ScrollView 
+                contentInsetAdjustmentBehavior="automatic"
+                refreshControl={
+                    <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
+                }>
                 <View style={{ height: windowHeight - 125, width: windowWidth}}>
                     {posts.map((post: Post) => (
                         <View key={post.id}>
