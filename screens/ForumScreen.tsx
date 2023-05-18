@@ -1,52 +1,54 @@
 import { useEffect, useState } from "react";
-import { TouchableOpacity, SafeAreaView, ScrollView, Text, View } from "react-native";
+import { TouchableOpacity, SafeAreaView, ScrollView, Text, View, Dimensions } from "react-native";
+import AddNewPost from "../components/AddNewPost";
 
 interface Post {
     title: string;
     id: string;
     updatedAt: string;
     user: {
-      name: string;
-      image: string;
+        name: string;
+        image: string;
     }
     _count: {
-      comments: number;
+        comments: number;
     }
-  }
-  
-  export default function ForumScreen(props: { navigation: any }) {
+}
+
+const windowWidth = Dimensions.get('window').width;
+const windowHeight = Dimensions.get('window').height;
+export default function ForumScreen(props: { navigation: any }) {
     const [posts, setPosts] = useState<Post[]>([]);
-  
+
     useEffect(() => {
-      const latestPost = async () => {
-        const data = await fetch("http://localhost:3000/post/latest");
-        const resp = await data.json();
-        setPosts(resp);
-      }
-      latestPost();
+        const latestPost = async () => {
+            const data = await fetch("http://localhost:3000/post/latest");
+            const resp = await data.json();
+            setPosts(resp);
+        }
+        latestPost();
     }, []);
 
     return (
-      <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
-        <SafeAreaView>
-          <ScrollView contentInsetAdjustmentBehavior="automatic">
-            <View>
-              {posts.map((post: Post) => (
-                <TouchableOpacity
-                  key={post.id}
-                  style={{ flex: 1, marginTop: 10, backgroundColor: "red" }}
-                  onPress={() => props.navigation.navigate("Post", { postId: post.id })}
-                >
-                  <Text>{post.title}</Text>
-                  <Text>{post.user.name}</Text>
-                  <Text>{post.updatedAt}</Text>
-                  <Text>{post._count.comments}</Text>
-                </TouchableOpacity>
-              ))}
-            </View>
-          </ScrollView>
+        <SafeAreaView style={{flex: 1, alignItems: 'center', justifyContent: 'center' }}>
+            <ScrollView contentInsetAdjustmentBehavior="automatic">
+                <View style={{ height: windowHeight - 125, width: windowWidth}}>
+                    {posts.map((post: Post) => (
+                        <View key={post.id}>
+                            <TouchableOpacity
+                                style={{ marginTop: 10, backgroundColor: "red" }}
+                                onPress={() => props.navigation.navigate("Post", { postId: post.id })}
+                            >
+                                <Text>{post.title}</Text>
+                                <Text>{post.user.name}</Text>
+                                <Text>{post.updatedAt}</Text>
+                                <Text>{post._count.comments}</Text>
+                            </TouchableOpacity>
+                        </View>
+                    ))}
+                    <AddNewPost navigation={props.navigation} />
+                </View>
+            </ScrollView>
         </SafeAreaView>
-      </View>
     );
-  }
-  
+}
