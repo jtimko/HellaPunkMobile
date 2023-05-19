@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import auth from "@react-native-firebase/auth";
 import { Button, SafeAreaView, ScrollView, Text, View, TextInput } from "react-native";
 
 interface PostById {
@@ -40,6 +41,26 @@ export default function PostScreen(props: { route: any; navigation: any }) {
     };
     postById();
   }, []);
+
+  async function addComment() {
+    await fetch("http://localhost:3000/post/add", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        postId: postId,
+        message: comment,
+        email: auth().currentUser?.email,
+      }),
+    })
+      .then((resp) => resp.json())
+      .then((data) => {
+        console.log(data);
+        setComment("");
+      })
+      .catch((err) => console.log(err));
+  }
 
   return (
     <SafeAreaView>
@@ -92,7 +113,9 @@ export default function PostScreen(props: { route: any; navigation: any }) {
             onChangeText={(text) => setComment(text)}
             value={comment}
           />
-          <Button title="Send" />
+          <Button 
+            title="Send"
+            onPress={() => addComment()} />
         </View>
       </ScrollView>
     </SafeAreaView>
