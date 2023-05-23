@@ -1,6 +1,8 @@
 import { useEffect, useState } from "react";
 import auth from "@react-native-firebase/auth";
 import { Button, SafeAreaView, ScrollView, Text, View, TextInput } from "react-native";
+import PostFormat from "../components/PostFormat";
+import PostComment from "../components/PostComment";
 
 interface PostById {
   id: string;
@@ -56,7 +58,6 @@ export default function PostScreen(props: { route: any; navigation: any }) {
     })
       .then((resp) => resp.json())
       .then((data) => {
-        console.log(data);
         setComment("");
       })
       .catch((err) => console.log(err));
@@ -65,30 +66,12 @@ export default function PostScreen(props: { route: any; navigation: any }) {
   return (
     <SafeAreaView>
       <ScrollView contentInsetAdjustmentBehavior="automatic">
-        <View
-          style={{
-            padding: 5,
-            borderBottomWidth: 1,
-            borderBottomColor: "black",
-          }}
-        >
-          <Text>{post?.title}</Text>
-          <Text>From: {post?.user.name}</Text>
-          <Text>Posted: {post?.createdAt}</Text>
-          <Text></Text>
-          <Text>{post?.message}</Text>
-        </View>
+        <PostFormat post={post} />
         <View>
           {post?.comments != null ? (
-            <View>
-              {post?.comments.map((comment: any) => (
-                <View key={comment.id}>
-                  <Text>{comment.user.name}</Text>
-                  <Text>{comment.message}</Text>
-                  <Text>{comment.createdAt}</Text>
-                </View>
-              ))}
-            </View>
+            post?.comments.map((comment) => (
+              <PostComment key={comment.id} comments={post} />
+            ))
           ) : (
             <Text>No comments</Text>
           )}

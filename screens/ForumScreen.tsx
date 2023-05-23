@@ -50,13 +50,13 @@ export default function ForumScreen(props: { navigation: any }) {
                     {posts.map((post: Post) => (
                         <View key={post.id}>
                             <TouchableOpacity
-                                style={{ marginTop: 10, backgroundColor: "red" }}
+                                style={{ marginTop: 10, backgroundColor: "#eee", padding: 10 }}
                                 onPress={() => props.navigation.navigate("Post", { postId: post.id })}
                             >
-                                <Text>{post.title}</Text>
-                                <Text>{post.user.name}</Text>
-                                <Text>{post.updatedAt}</Text>
-                                <Text>{post._count.comments}</Text>
+                                <Text style={{fontSize: 18}}>{post.title}</Text>
+                                <Text>By: {post.user.name}</Text>
+                                <Text>Updated: {new Date(post.updatedAt).toLocaleString()} </Text>
+                                <Text>Comments: {post._count.comments}</Text>
                             </TouchableOpacity>
                         </View>
                     ))}
