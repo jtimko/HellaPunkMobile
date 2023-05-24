@@ -1,12 +1,11 @@
 import { useEffect, useState } from "react";
 import TrackPlayer, {
   Event,
-  useTrackPlayerEvents,
 } from "react-native-track-player";
 import { Button, SafeAreaView, ScrollView, Text, View } from "react-native";
 
 export default function RadioScreen() {
-  const [isPlaying, setIsPlaying] = useState<boolean>(false);
+  const [isPlaying, setIsPlaying] = useState<boolean>(true);
   const [trackTitle, setTrackTitle] = useState<string>("");
 
   useEffect(() => {
@@ -37,6 +36,7 @@ export default function RadioScreen() {
 
   function radioControl() {
     setIsPlaying(!isPlaying);
+    console.log(isPlaying);
     if (isPlaying) TrackPlayer.play();
     else TrackPlayer.pause();
   }
@@ -47,7 +47,7 @@ export default function RadioScreen() {
         <ScrollView contentInsetAdjustmentBehavior="automatic">
           <Button
             onPress={() => radioControl()}
-            title={isPlaying ? "Pause" : "Play"}
+            title={isPlaying ? "Play" : "Pause"}
           />
           {trackTitle != "" ? <Text>Now Playing: {trackTitle}</Text> : null}
         </ScrollView>
