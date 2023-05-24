@@ -59,6 +59,7 @@ export default function PostScreen(props: { route: any; navigation: any }) {
       .then((resp) => resp.json())
       .then((data) => {
         setComment("");
+        props.navigation.navigate("Post", { postId: postId });
       })
       .catch((err) => console.log(err));
   }
@@ -69,8 +70,8 @@ export default function PostScreen(props: { route: any; navigation: any }) {
         <PostFormat post={post} />
         <View>
           {post?.comments != null ? (
-            post?.comments.map((comment) => (
-              <PostComment key={comment.id} comments={post} />
+            post?.comments.map((comment: PostById["comments"][0]) => (
+              <PostComment key={comment.id} comment={comment} />
             ))
           ) : (
             <Text>No comments</Text>

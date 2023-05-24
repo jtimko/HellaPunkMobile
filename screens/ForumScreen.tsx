@@ -1,6 +1,7 @@
 import { useEffect, useState, useCallback } from "react";
-import { TouchableOpacity, SafeAreaView, ScrollView, Text, View, Dimensions, RefreshControl } from "react-native";
+import { SafeAreaView, ScrollView, View, Dimensions, RefreshControl } from "react-native";
 import AddNewPost from "../components/AddNewPost";
+import ForumCard from "../components/ForumCard";
 
 interface Post {
     title: string;
@@ -37,7 +38,7 @@ export default function ForumScreen(props: { navigation: any }) {
             setPosts(resp);
         }
         latestPost();
-    }, []);
+    }, [refreshing]);
 
     return (
         <SafeAreaView style={{flex: 1, alignItems: 'center', justifyContent: 'center' }}>
@@ -48,17 +49,7 @@ export default function ForumScreen(props: { navigation: any }) {
                 }>
                 <View style={{ height: windowHeight - 125, width: windowWidth}}>
                     {posts.map((post: Post) => (
-                        <View key={post.id}>
-                            <TouchableOpacity
-                                style={{ marginTop: 10, backgroundColor: "#eee", padding: 10 }}
-                                onPress={() => props.navigation.navigate("Post", { postId: post.id })}
-                            >
-                                <Text style={{fontSize: 18}}>{post.title}</Text>
-                                <Text>By: {post.user.name}</Text>
-                                <Text>Updated: {new Date(post.updatedAt).toLocaleString()} </Text>
-                                <Text>Comments: {post._count.comments}</Text>
-                            </TouchableOpacity>
-                        </View>
+                       <ForumCard key={post.id} post={post} navigation={props.navigation} />
                     ))}
                     <AddNewPost navigation={props.navigation} />
                 </View>
