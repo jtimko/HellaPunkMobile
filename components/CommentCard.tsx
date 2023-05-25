@@ -24,7 +24,7 @@ interface PostById {
   ];
 }
 
-export default function PostComment(props: {comment: PostById["comments"][0] | null | undefined }) {
+export default function CommentCard(props: {comment: PostById["comments"][0] | null | undefined }) {
   return (
     <View
       style={{
@@ -32,16 +32,16 @@ export default function PostComment(props: {comment: PostById["comments"][0] | n
         flex: 1,
         flexDirection: 'row',
       }}>
-      <View style={{flex: 2}}>
+      <View style={{flex: 3, alignSelf: 'center'}}>
         <Text>{props.comment?.message}</Text>
         <Text style={{fontStyle: 'italic', color: '#cecece', marginTop: 5}}>{new Date(props.comment?.createdAt!).toLocaleString()}</Text>
       </View>
-      <View style={{flex: 1}}>
-      <Image
-            source={{uri: props.comment?.user.image}}
-            style={{width: 50, height: 50, borderRadius: 50}}
-            />
-        <Text>From: {props.comment?.user.name}</Text>
+      <View style={{flex: 1, justifyContent: 'center', alignItems: 'center'}}>
+        <Image
+              source={{uri: props.comment?.user.image}}
+              style={{width: 50, height: 50, borderRadius: 50}}
+              />
+          <Text style={{textAlign: 'center'}}>{props.comment?.user.name}</Text>
       </View>
     </View>
   );

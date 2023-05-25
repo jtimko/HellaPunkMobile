@@ -28,7 +28,8 @@ export default function PostFormat(props: {post: PostById | null | undefined}) {
   return (
     <View
       style={{
-        padding: 5,
+        paddingHorizontal: 5,
+        paddingVertical: 10,
         borderBottomWidth: 1,
         borderBottomColor: 'black',
         flex: 1,

@@ -1,8 +1,8 @@
 import { useEffect, useState } from "react";
 import auth from "@react-native-firebase/auth";
-import { Button, SafeAreaView, ScrollView, Text, View, TextInput } from "react-native";
+import { Button, SafeAreaView, ScrollView, Text, View, TextInput, Dimensions } from "react-native";
 import PostFormat from "../components/PostFormat";
-import PostComment from "../components/PostComment";
+import CommentCard from "../components/CommentCard";
 
 interface PostById {
   id: string;
@@ -32,6 +32,9 @@ export default function PostScreen(props: { route: any; navigation: any }) {
   const postId = props.route?.params?.postId;
   const [post, setPost] = useState<PostById | null>();
   const [comment, setComment] = useState<string>("");
+  const [refetch, setRefetch] = useState<boolean>(false);
+  const windowWidth = Dimensions.get('window').width;
+  const windowHeight = Dimensions.get('window').height;
 
   useEffect(() => {
     const postById = async () => {
@@ -42,7 +45,7 @@ export default function PostScreen(props: { route: any; navigation: any }) {
       setPost(resp);
     };
     postById();
-  }, []);
+  }, [refetch]);
 
   async function addComment() {
     await fetch("http://localhost:3000/post/add", {
@@ -59,30 +62,30 @@ export default function PostScreen(props: { route: any; navigation: any }) {
       .then((resp) => resp.json())
       .then((data) => {
         setComment("");
-        props.navigation.navigate("Post", { postId: postId });
+        setRefetch(true);
       })
       .catch((err) => console.log(err));
   }
 
   return (
-    <SafeAreaView>
+    <SafeAreaView style={{flex: 1}}>
       <ScrollView contentInsetAdjustmentBehavior="automatic">
         <PostFormat post={post} />
+
         <View>
           {post?.comments != null ? (
             post?.comments.map((comment: PostById["comments"][0]) => (
-              <PostComment key={comment.id} comment={comment} />
+              <CommentCard key={comment.id} comment={comment} />
             ))
           ) : (
             <Text>No comments</Text>
           )}
         </View>
-        <View
-          style={{
-            flex: 1,
-            flexDirection: "row",
-          }}
-        >
+
+        
+      </ScrollView>
+
+      <View style={{position: 'absolute', bottom: 5, flex: 1, flexDirection: "row"}}>
           <TextInput
             placeholder="Comment"
             style={{
@@ -101,7 +104,6 @@ export default function PostScreen(props: { route: any; navigation: any }) {
             title="Send"
             onPress={() => addComment()} />
         </View>
-      </ScrollView>
     </SafeAreaView>
   );
 }
