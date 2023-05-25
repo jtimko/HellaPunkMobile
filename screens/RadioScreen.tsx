@@ -36,7 +36,6 @@ export default function RadioScreen() {
 
   function radioControl() {
     setIsPlaying(!isPlaying);
-    console.log(isPlaying);
     if (isPlaying) TrackPlayer.play();
     else TrackPlayer.pause();
   }
