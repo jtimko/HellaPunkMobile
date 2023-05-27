@@ -3,6 +3,7 @@ import auth from "@react-native-firebase/auth";
 import { Button, SafeAreaView, ScrollView, Text, View, TextInput, Dimensions } from "react-native";
 import PostFormat from "../components/PostFormat";
 import CommentCard from "../components/CommentCard";
+import SendMessage from "../components/SendMessage";
 
 interface PostById {
   id: string;
@@ -31,7 +32,7 @@ interface PostById {
 export default function PostScreen(props: { route: any; navigation: any }) {
   const postId = props.route?.params?.postId;
   const [post, setPost] = useState<PostById | null>();
-  const [comment, setComment] = useState<string>("");
+  // const [comment, setComment] = useState<string>("");
   const [refetch, setRefetch] = useState<boolean>(false);
   const windowWidth = Dimensions.get('window').width;
   const windowHeight = Dimensions.get('window').height;
@@ -47,7 +48,7 @@ export default function PostScreen(props: { route: any; navigation: any }) {
     postById();
   }, [refetch]);
 
-  async function addComment() {
+  async function addComment(comment: string) {
     await fetch("http://localhost:3000/post/add", {
       method: "POST",
       headers: {
@@ -61,7 +62,6 @@ export default function PostScreen(props: { route: any; navigation: any }) {
     })
       .then((resp) => resp.json())
       .then((data) => {
-        setComment("");
         setRefetch(true);
       })
       .catch((err) => console.log(err));
@@ -84,26 +84,7 @@ export default function PostScreen(props: { route: any; navigation: any }) {
 
         
       </ScrollView>
-
-      <View style={{position: 'absolute', bottom: 5, flex: 1, flexDirection: "row"}}>
-          <TextInput
-            placeholder="Comment"
-            style={{
-              flex: 1,
-              flexGrow: 1,
-              padding: 5,
-              borderWidth: 1,
-              borderColor: "black",
-              borderRadius: 25,
-              marginTop: 10,
-            }}
-            onChangeText={(text) => setComment(text)}
-            value={comment}
-          />
-          <Button 
-            title="Send"
-            onPress={() => addComment()} />
-        </View>
+      <SendMessage addComment={addComment}  />
     </SafeAreaView>
   );
 }
