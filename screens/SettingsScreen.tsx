@@ -41,7 +41,7 @@ export default function SettingsScreen() {
               <View style={{marginBottom: 15}}>
                 <TextInput
                   defaultValue={username}
-                  style={{ height: 20, padding: 5, borderColor: 'gray', borderWidth: 1, borderRadius: 25, width: 200, textAlign: 'center' }}
+                  style={{ height: 25, padding: 5, borderColor: 'gray', borderWidth: 1, borderRadius: 25, width: 200, textAlign: 'center' }}
                   onChangeText={text => setChangeUsername(text)}
                   />
                 <Text style={{textAlign: 'center'}}>Username</Text>

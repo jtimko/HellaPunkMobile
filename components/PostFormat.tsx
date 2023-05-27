@@ -35,12 +35,12 @@ export default function PostFormat(props: {post: PostById | null | undefined}) {
         flex: 1,
         flexDirection: 'row',
       }}>
-      <View style={{flex: 1}}>
+      <View style={{flex: 1, justifyContent: 'center', alignItems: 'center'}}>
         <Image
             source={{uri: props.post?.user.image}}
             style={{width: 50, height: 50, borderRadius: 50}}
             />
-        <Text>From: {props.post?.user.name}</Text>
+        <Text style={{textAlign: 'center'}}>{props.post?.user.name}</Text>
       </View>
       <View style={{flex: 3}}>
         <Text style={{fontSize: 18}}>{props.post?.title}</Text>
