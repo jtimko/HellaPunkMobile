@@ -21,7 +21,7 @@ export default function ForumCard(props: {post: Post; navigation: any}) {
         props.navigation.navigate('Post', {postId: props.post.id})
       }>
       <View style={{flexDirection: 'row'}}>
-        <View style={{}}>
+        <View>
             <Image source={{uri: props.post.user.image}} style={{width: 50, height: 50, borderRadius: 50}} />
           <Text style={{fontStyle: 'italic', color: '#a3a3a3', textAlign: 'center'}}>
             {props.post.user.name}

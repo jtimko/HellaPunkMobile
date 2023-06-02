@@ -24,7 +24,7 @@ interface PostById {
   ];
 }
 
-export default function PostFormat(props: {post: PostById | null | undefined}) {
+export default function PostFormat(props: {navigation: any, post: PostById | null | undefined}) {
   return (
     <View
       style={{
@@ -40,7 +40,9 @@ export default function PostFormat(props: {post: PostById | null | undefined}) {
             source={{uri: props.post?.user.image}}
             style={{width: 50, height: 50, borderRadius: 50}}
             />
-        <Text style={{textAlign: 'center'}}>{props.post?.user.name}</Text>
+        <Text style={{textAlign: 'center'}} onPress={() => props.navigation.navigate("ProfileScreen", {username: props.post?.user.name})}>
+          {props.post?.user.name}
+          </Text>
       </View>
       <View style={{flex: 3}}>
         <Text style={{fontSize: 18}}>{props.post?.title}</Text>

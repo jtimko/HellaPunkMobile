@@ -24,7 +24,7 @@ interface PostById {
   ];
 }
 
-export default function CommentCard(props: {comment: PostById["comments"][0] | null | undefined }) {
+export default function CommentCard(props: {navigation: any, comment: PostById["comments"][0] | null | undefined }) {
   return (
     <View
       style={{
@@ -41,7 +41,9 @@ export default function CommentCard(props: {comment: PostById["comments"][0] | n
               source={{uri: props.comment?.user.image}}
               style={{width: 50, height: 50, borderRadius: 50}}
               />
-          <Text style={{textAlign: 'center'}}>{props.comment?.user.name}</Text>
+        <Text style={{textAlign: 'center'}} onPress={() => props.navigation.navigate("ProfileScreen", {username: props.comment?.user.name})}>
+          {props.comment?.user.name}
+        </Text>
       </View>
     </View>
   );

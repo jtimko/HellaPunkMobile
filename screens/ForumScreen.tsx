@@ -16,7 +16,6 @@ interface Post {
     }
 }
 
-
 const windowWidth = Dimensions.get('window').width;
 const windowHeight = Dimensions.get('window').height;
 
